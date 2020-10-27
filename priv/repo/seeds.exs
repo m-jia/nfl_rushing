@@ -9,3 +9,20 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias NflRushing.Repo
+alias Repo.Schemas.Player
+
+priv_dir = :code.priv_dir(:nfl_rushing)
+
+players =
+  "#{priv_dir}/repo/seeds/rushing.json"
+  |> File.read!()
+  |> Jason.decode!()
+
+Enum.each(players, fn p ->
+  p
+  |> Player.from_json()
+  |> Player.changeset()
+  |> Repo.insert!()
+end)
