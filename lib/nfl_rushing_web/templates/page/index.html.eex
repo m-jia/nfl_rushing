@@ -1,38 +1,37 @@
-<section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>Peace of mind from prototype to production</p>
-</section>
-
-<section class="row">
-  <article class="column">
-    <h2>Resources</h2>
-    <ul>
-      <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.5/CHANGELOG.md">v1.5 Changelog</a>
-      </li>
-    </ul>
-  </article>
-  <article class="column">
-    <h2>Help</h2>
-    <ul>
-      <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
-      </li>
-      <li>
-        <a href="https://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on Freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-      <li>
-        <a href="https://elixir-slackin.herokuapp.com/">Elixir on Slack</a>
-      </li>
-    </ul>
-  </article>
-</section>
+<div class="card">
+    <div class="card-body">
+        <div class="row text-center">
+          <h1>NFL Players</h1>
+          <h4>Total: <label id="div_total_entries"></label> in <label id="div_total_pages"></label> pages</h4>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-8"><input id="txt_player_name" placeholder="filter by player name"><button id="btn_reset" class="btn btn-link">reset</button></div>
+          <div class="col-md-4"><div id="paginator" class="text-center"></div>
+        </div>
+        <div class="row text-center">
+          <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Team</th>
+                    <th>Position</th>
+                    <th>Attempts</th>
+                    <th>Attempts per Game</th>
+                    <th><a class="btn btn-link" id="link_sort_by_yards">Yards</a></th>
+                    <th>Yards per Attempt</th>
+                    <th>Yards per Game</th>
+                    <th><a class="btn btn-link" id="link_sort_by_touchdowns">Touch Down</a></th>
+                    <th><a class="btn btn-link" id="link_sort_by_longest">Longest</a></th>
+                    <th>1st</th>
+                    <th>1st%</th>
+                    <th>20+</th>
+                    <th>40+</th>
+                    <th>FUM</th>
+                </tr>
+            </thead>
+            <tbody id="tbody_players">
+            </tbody>
+          </table>
+        </div>
+    </div>
+</div>
