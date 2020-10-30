@@ -1,0 +1,20 @@
+version: "3"
+services:
+  app:
+    build: .
+    command: "sh run.sh"
+    environment:
+      DATABASE_HOST: db
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+  db:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    restart: always
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
