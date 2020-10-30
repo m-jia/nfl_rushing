@@ -1,4 +1,4 @@
-sleep 5s
+sleep 15s
 
 mix ecto.setup
 mix ecto.migrate

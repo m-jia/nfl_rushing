@@ -5,8 +5,9 @@
           <h4>Total: <label id="div_total_entries"></label> in <label id="div_total_pages"></label> pages</h4>
         </div>
         <div class="row mt-4">
-          <div class="col-md-8"><input id="txt_player_name" placeholder="filter by player name"><button id="btn_reset" class="btn btn-link">reset</button></div>
-          <div class="col-md-4"><div id="paginator" class="text-center"></div>
+          <div class="col-md-4"><input id="txt_player_name" placeholder="filter by player name"><button id="btn_reset" class="btn btn-link">reset</button></div>
+          <div class="col-md-6"><div id="paginator" class="text-center"></div></div>
+          <div class="col-md-2"><button id="btn_csv" class="btn btn-info">export to csv</button></div>
         </div>
         <div class="row text-center">
           <table class="table table-striped table-hover">

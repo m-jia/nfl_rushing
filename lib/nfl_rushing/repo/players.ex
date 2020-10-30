@@ -15,14 +15,25 @@ defmodule NflRushing.Repo.Players do
         false -> [asc: sort_by]
       end
 
-    page_term = [
-      page: Map.get(params, :page, 1),
-      page_size: Map.get(params, :page_size, 10)
-    ]
+    query =
+      Player
+      |> where([p], ilike(p.name, ^name_term))
+      |> order_by(^sort_term)
 
-    Player
-    |> where([p], ilike(p.name, ^name_term))
-    |> order_by(^sort_term)
-    |> Repo.paginate(page_term)
+    return_all = Map.get(params, :return_all, false)
+
+    page_term =
+      case return_all do
+        true ->
+          [page_size: Repo.aggregate(query, :count, :id)]
+
+        false ->
+          [
+            page: Map.get(params, :page, 1),
+            page_size: Map.get(params, :page_size, 10)
+          ]
+      end
+
+    Repo.paginate(query, page_term)
   end
 end

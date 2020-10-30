@@ -10,6 +10,7 @@ defmodule NflRushingWeb.Schema do
       arg(:desc, :boolean)
       arg(:page, :integer)
       arg(:page_size, :integer)
+      arg(:return_all, :boolean)
 
       resolve(&NflRushingWeb.Resolvers.Player.all/2)
     end

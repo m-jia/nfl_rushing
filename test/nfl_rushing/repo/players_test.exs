@@ -35,6 +35,13 @@ defmodule NflRushing.Repo.PlayersTest do
     verify_page_result(page, 1, ctx.p3.name, 3, 2, 2, 2)
   end
 
+  test "paginated_all_by/1 will return all players if return_all is true, ignore any pagination parameters",
+       ctx do
+    page = Players.paginated_all_by(%{return_all: true, page_size: 2, page: 2})
+
+    verify_page_result(page, 3, ctx.p2.name, 3, 1, 1, 3)
+  end
+
   defp verify_page_result(
          page,
          page_entries,

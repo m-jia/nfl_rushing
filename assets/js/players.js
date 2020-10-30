@@ -83,12 +83,13 @@ let reloadPlayers = function(result) {
   $(".page-link").on("click", function() {goToPage(this.name)});
 };
 
-let generateQuery = function() {
+let generateQuery = function(returnAll = false) {
   return `{players(
     playerName: "${playerName}"
     page: ${pageNumber}
     sortBy: "${sortBy}"
     desc: ${desc}
+    returnAll: ${returnAll}
     ) {
     pageSize
     pageNumber
@@ -157,7 +158,79 @@ let resetFilter = function() {
   loadPlayers();
 }
 
+let convertToCSV = function(headers, players) {
+  var str = '';
+
+  for (var key in headers) {
+    if (str != '') str += ',';
+    str += headers[key];
+  }
+  str += '\r\n';
+
+  for (var i = 0; i < players.length; i++) {
+      var line = '';
+      for (var key in headers) {
+          if (line != '') line += ','
+          line += players[i][key];
+      }
+      str += line + '\r\n';
+  }
+  return str;
+}
+
+let exportCSVFile = function(headers, players, fileTitle) {
+  var csv = convertToCSV(headers, players);
+  var exportedFilenmae = fileTitle + '.csv' || 'export.csv';
+
+  var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  if (navigator.msSaveBlob) {
+      navigator.msSaveBlob(blob, exportedFilenmae);
+  } else {
+      var link = document.createElement("a");
+      if (link.download !== undefined) { 
+          var url = URL.createObjectURL(blob);
+          link.setAttribute("href", url);
+          link.setAttribute("download", exportedFilenmae);
+          link.style.visibility = 'hidden';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+      }
+  }
+}
+
+let exportToCSV = function() {
+  var query = generateQuery(true);
+  var headers = {
+    name: "Name",
+    team: "Team",
+    pos: "Position",
+    att: "Attemps",
+    attG: "Attempts per game",
+    yds: "Yards",
+    ydsG: "Yard per game",
+    td: "Touchdowns",
+    avg: "Avg",
+    lng: "Longest",
+    lngT: "Longest Touchdown?",
+    first: "1st",
+    firstPercentage: "1st%",
+    twentyPlus: "20+",
+    fourtyPlus: "40+",
+    fum: "FUM"
+  }
+  $.ajax({url: "http://127.0.0.1:4000/graphql",
+    type:'POST',
+    contentType: "application/json",
+    data: JSON.stringify({ "query": query }),
+    success: function(response) {
+      exportCSVFile(headers, response.data.players.entries, "NFL_Players");
+    }
+  });
+}
+
 $("#btn_reset").on("click", resetFilter);
+$("#btn_csv").on("click", exportToCSV);
 $("#txt_player_name").on("keyup", searchByName);
 $("#link_sort_by_yards").on("click", function() {sortByField("yds");});
 $("#link_sort_by_longest").on("click", function() {sortByField("lng");});

@@ -3,5 +3,5 @@ defmodule NflRushing.Repo do
     otp_app: :nfl_rushing,
     adapter: Ecto.Adapters.Postgres
 
-  use Scrivener, page_size: 10
+  use Scrivener
 end
